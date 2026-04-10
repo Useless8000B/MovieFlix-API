@@ -25,7 +25,6 @@ MovieFlix is designed to help users discover movies.
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/Useless8000B/MovieFlix-API.git
-cd movieflix-api
 ```
 
 ### 2. Configure Environment & Database
