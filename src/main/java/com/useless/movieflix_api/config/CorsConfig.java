@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("https://movieflix-ten-ashen.vercel.app/")
-                        .allowedMethods("GET")
+                        .allowedMethods("GET", "POST")
                         .allowedHeaders("Content-Type", "Authorization");
             }
         };
