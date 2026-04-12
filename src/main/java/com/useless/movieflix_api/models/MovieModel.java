@@ -16,10 +16,9 @@ public class MovieModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String movie_banner;
-    private String movie_rating;
-    private String movie_name;
-    private int movie_year;
-    private String movie_genre;
+    private String movieBanner;
+    private String movieRating;
+    private String movieName;
+    private int movieYear;
+    private String movieGenre;
 }
