@@ -62,7 +62,14 @@ docker build -t movieflix-api .
 
 2. **Start the container** (Mapping local port 3333 to container port 1212):
 ```bash
-docker run -d -p 3333:1212 --name movieflix-app movieflix-api
+docker run -d \                                            □ movieflix-api △ pkg ◨ 0.0.1-SNAPSHOT java ∪ v25.0.2  12:19
+             --name movieflix-api \
+             -p 3333:1212 \
+             -e DB_URL='jdbc:postgresql://your-url' \
+             -e DB_USERNAME='postgres.your-user' \
+             -e DB_PASSWORD='your-password' \
+             -e PORT=3333 \
+             movieflix-api:latest
 ```
 
 3. **Stop container**
