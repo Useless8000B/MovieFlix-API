@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.useless.movieflix_api.models.MovieModel;
@@ -30,6 +31,16 @@ public class MovieController {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieModel>> getMoviesBySimilarName(@RequestParam String movieName) {
+        List<MovieModel> movies = movieRepository.findByMovieNameContainingIgnoreCase(movieName);
+
+        if (movies.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(movies);
     }
 
     @PostMapping("/add")
