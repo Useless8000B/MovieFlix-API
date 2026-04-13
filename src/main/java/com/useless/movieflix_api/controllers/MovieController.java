@@ -34,18 +34,28 @@ public class MovieController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<MovieModel>> getMoviesBySimilarName(@RequestParam String movieName) {
-        List<MovieModel> movies = movieRepository.findByMovieNameContainingIgnoreCase(movieName);
+    public ResponseEntity<?> getMoviesBySimilarName(@RequestParam String movieName) {
+        try {
+            List<MovieModel> movies = movieRepository.findByMovieNameContainingIgnoreCase(movieName);
 
-        if (movies.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            if (movies.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(movies);
+        } catch (Exception e) {
+            System.err.println("Error searching for movies: " + e.getMessage());
+            return ResponseEntity.status(500).body("An error occurred while processing your request.");
         }
-        return ResponseEntity.ok(movies);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<MovieModel> addMovie(@RequestBody MovieModel movie) {
-        MovieModel saved_movie = movieRepository.save(movie);
+    public ResponseEntity<?> addMovie(@RequestBody MovieModel movie) {
+        try {
+            MovieModel saved_movie = movieRepository.save(movie);
         return ResponseEntity.status(201).body(saved_movie);
+        } catch (Exception e) {
+            System.err.println(e.getMessage() + "");
+            return ResponseEntity.status(500).body("An error occurred while saving the movie!");
+        }
     }
 }
