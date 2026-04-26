@@ -17,21 +17,21 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleGenericException(Exception e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-		ErrorResponse error = new ErrorResponse(
-			LocalDateTime.now(),
-			status.value(),
-			status.getReasonPhrase(),
-			e.getMessage(),
-			request.getRequestURI()
-		);
-
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+		return buildErrorResponse(status, request, e);
 	}
 
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 
+		return buildErrorResponse(status, request, e);
+	}
+
+	private ResponseEntity<ErrorResponse> buildErrorResponse(
+		HttpStatus status,
+		HttpServletRequest request,
+		Exception e
+	) {
 		ErrorResponse error = new ErrorResponse(
 			LocalDateTime.now(),
 			status.value(),
@@ -40,6 +40,6 @@ public class GlobalExceptionHandler {
 			request.getRequestURI()
 		);
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+		return ResponseEntity.status(status).body(error);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.useless.movieflix_api.exceptions.NotFoundException;
 import com.useless.movieflix_api.model.MovieModel;
 import com.useless.movieflix_api.repository.MovieRepository;
 
@@ -24,38 +25,30 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<MovieModel>> getAllMovies() {
-        try {
-            List<MovieModel> movies = movieRepository.findAll(PageRequest.of(0, 18)).getContent();
-            return ResponseEntity.ok(movies);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).build();
+        List<MovieModel> movies = movieRepository.findAll(PageRequest.of(0, 18)).getContent();
+
+        if (movies == null || movies.isEmpty()) {
+            throw new NotFoundException("No movies");
         }
+
+        return ResponseEntity.ok(movies);
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> getMoviesBySimilarName(@RequestParam String movieName) {
-        try {
             List<MovieModel> movies = movieRepository.findByMovieNameContainingIgnoreCase(movieName);
 
             if (movies.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
+
             return ResponseEntity.ok(movies);
-        } catch (Exception e) {
-            System.err.println("Error searching for movies: " + e.getMessage());
-            return ResponseEntity.status(500).body("An error occurred while processing your request.");
-        }
     }
 
     @PostMapping("/add")
     public ResponseEntity<?> addMovie(@RequestBody MovieModel movie) {
-        try {
-            MovieModel saved_movie = movieRepository.save(movie);
+        MovieModel saved_movie = movieRepository.save(movie);
+
         return ResponseEntity.status(201).body(saved_movie);
-        } catch (Exception e) {
-            System.err.println(e.getMessage() + "");
-            return ResponseEntity.status(500).body("An error occurred while saving the movie!");
-        }
     }
 }
