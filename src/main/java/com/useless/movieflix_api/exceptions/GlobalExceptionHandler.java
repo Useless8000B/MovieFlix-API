@@ -20,8 +20,8 @@ public class GlobalExceptionHandler {
 		ErrorResponse error = new ErrorResponse(
 			LocalDateTime.now(),
 			status.value(),
-			e.getMessage(),
 			status.getReasonPhrase(),
+			e.getMessage(),
 			request.getRequestURI()
 		);
 
@@ -35,8 +35,8 @@ public class GlobalExceptionHandler {
 		ErrorResponse error = new ErrorResponse(
 			LocalDateTime.now(),
 			status.value(),
-			e.getMessage(),
 			status.getReasonPhrase(),
+			e.getMessage(),
 			request.getRequestURI()
 		);
 
