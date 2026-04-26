@@ -1,4 +1,4 @@
-package com.useless.movieflix_api.models;
+package com.useless.movieflix_api.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

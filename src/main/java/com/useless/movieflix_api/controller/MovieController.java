@@ -1,4 +1,4 @@
-package com.useless.movieflix_api.controllers;
+package com.useless.movieflix_api.controller;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.useless.movieflix_api.models.MovieModel;
-import com.useless.movieflix_api.repositories.MovieRepository;
+import com.useless.movieflix_api.model.MovieModel;
+import com.useless.movieflix_api.repository.MovieRepository;
 
 import lombok.RequiredArgsConstructor;
 
